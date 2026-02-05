@@ -30,6 +30,12 @@ function training() {
 
   const trainingCost = Math.ceil(warrior.weapon.cost / 10);
 
+  if (trainingCost > warrior.gold) {
+    console.log(`${warrior.name} cannot train because they have no gold left`);
+    trainingDay.round += 1;
+    return;
+  }
+
   warrior.gold -= trainingCost;
 
   showAttributes(warrior);
@@ -76,7 +82,8 @@ function calculateQuality(warrior) {
       warrior.weapon.durability -= currentDurability;
     }
   } else if (result === 3) {
-    warrior.weapon.durability += result; //ajustar
+    const increaseProbability = Math.floor((result * 0.5) / result);
+    warrior.weapon.durability += increaseProbability;
   } else {
     currentDurability = Math.floor(
       (warrior.weapon.durability * 0.1) / warrior.weapon.durability,

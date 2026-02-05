@@ -1,5 +1,4 @@
 const warriors = require("../db/warriors.json");
-
 const weapons = require("../db/weapons.json");
 
 const newWarriors = [];
@@ -36,7 +35,7 @@ function assignRandomWeapon() {
 function removeWeapon(deleteWeapon) {
   for (let i = 0; i < weapons.length; i++) {
     if (weapons[i].name === deleteWeapon.name) {
-      weapons.splice(weapons[i], 0);
+      weapons.splice(weapons[i], 1);
     }
   }
 }
