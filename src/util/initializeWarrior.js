@@ -1,4 +1,3 @@
-const Warrior = require("../model/warrior.model");
 const warriors = require("../db/warriors.json");
 
 const weapons = require("../db/weapons.json");
@@ -17,10 +16,9 @@ const initializeWarriors = () => {
     newWarriors.push(warrior);
   }
 
-  //TODO: Asegurar que ningun arma se repita
-
   newWarriors.forEach((warrior) => {
     const randomWeapon = assignRandomWeapon();
+
     if (warrior.strength >= randomWeapon.minStrength) {
       warrior.weapon = randomWeapon;
       removeWeapon(randomWeapon);
@@ -38,7 +36,7 @@ function assignRandomWeapon() {
 function removeWeapon(deleteWeapon) {
   for (let i = 0; i < weapons.length; i++) {
     if (weapons[i].name === deleteWeapon.name) {
-      weapons.splice(0, i);
+      weapons.splice(weapons[i], 0);
     }
   }
 }
