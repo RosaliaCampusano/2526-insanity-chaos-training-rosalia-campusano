@@ -1,0 +1,21 @@
+const mongoose = require("mongoose");
+
+const { Schema } = mongoose;
+
+const trainingSchema = new Schema({
+  epicDate: String,
+  warriors: [warriorsSchema],
+});
+
+const warriorsSchema = new Schema({
+  _id: false,
+  name: String,
+  weaponName: String,
+  durability: Number,
+  gold: Number,
+  state: String,
+});
+
+const Training = mongoose.model("Training", trainingSchema);
+
+module.exports = Training;
