@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const trainingSchema = new Schema({
-  epicDate: String,
-  warriors: [warriorsSchema],
-});
-
 const warriorsSchema = new Schema({
   _id: false,
   name: String,
@@ -14,6 +9,11 @@ const warriorsSchema = new Schema({
   durability: Number,
   gold: Number,
   state: String,
+});
+
+const trainingSchema = new Schema({
+  epicDate: String,
+  warriors: [warriorsSchema],
 });
 
 const Training = mongoose.model("Training", trainingSchema);

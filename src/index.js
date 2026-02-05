@@ -3,12 +3,13 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const cron = require("node-cron");
-
-const CRON_4_SECONDS_EXPRESSION = "*/4 * * * * *";
-const CRON_30_SECONDS_EXPRESSION = "*/30 * * * *";
-
 const { initializeWarriors } = require("./util/initializeWarrior");
 const { training } = require("./task/training");
+const { saveTraining } = require("./task/saveTraining");
+const { checkIfAllWarriorsCantTrain } = require("./task/stop.cron");
+
+const CRON_4_SECONDS_EXPRESSION = "*/4 * * * * *";
+const CRON_30_SECONDS_EXPRESSION = "*/30 * * * * *";
 
 (async () => {
   await mongoose.connect(process.env.MONGO_CONNECTION);
@@ -36,5 +37,7 @@ function welcomeMessages(warriors) {
   console.log();
 }
 
-cron.schedule(CRON_4_SECONDS_EXPRESSION, training);
-//cron.schedule(CRON_30_SECONDS_EXPRESSION)
+const task = cron.schedule(CRON_4_SECONDS_EXPRESSION, training);
+const saveTask = cron.schedule(CRON_30_SECONDS_EXPRESSION, saveTraining);
+
+checkIfAllWarriorsCantTrain(task, saveTask);
